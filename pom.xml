@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>com.project</groupId>
-    <artifactId>school-management-batch-161</artifactId>
+    <artifactId>school-management</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>school-management</name>
     <description>school-management</description>
@@ -41,7 +41,6 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.3.8</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -55,11 +54,21 @@
             <scope>test</scope>
         </dependency>
 <!--        FOR SWAGGER DOC-->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger2</artifactId>-->
-<!--            <version>${springfox-swagger2.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox-swagger2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.5.0-b01</version>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.springdoc</groupId>-->
 <!--            <artifactId>springdoc-openapi-ui</artifactId>-->
@@ -69,11 +78,6 @@
 <!--            <groupId>org.mapstruct</groupId>-->
 <!--            <artifactId>mapstruct</artifactId>-->
 <!--            <version>${mapstruct.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger-ui</artifactId>-->
-<!--            <version>${springfox-swagger2.version}</version>-->
 <!--        </dependency>-->
 <!--        SECURITY PART-->
         <dependency>
@@ -105,70 +109,6 @@
                         </exclude>
                     </excludes>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${java.version}
-                    </source> <!-- depending on your project. In this example, Java 11 is used -->
-                    <target>${java.version}
-                    </target> <!-- depending on your project. In this example, Java 11 is used -->
-                    <annotationProcessorPaths>
-
-                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapstruct.version}</version>
-                        </path>
-
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
-
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok-mapstruct-binding</artifactId>
-                            <version>${lombok-mapstruct-binding.version}</version>
-                        </path>
-
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
-<!--            docker image creation-->
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.40.1</version>
-                <configuration>
-                    <images>
-                        <image>
-                            <name>${project.name}:${project.version}</name>
-                            <build>
-                                <from>openjdk:17</from>
-                                <assembly>
-                                    <name>build</name>
-                                    <descriptorRef>artifact</descriptorRef>
-                                </assembly>
-                                <ports>
-                                    <port>8080</port>
-                                </ports>
-                                <cmd>java -jar build/${project.name}-${project.version}.jar</cmd>
-                            </build>
-                        </image>
-                    </images>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>build-image</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
