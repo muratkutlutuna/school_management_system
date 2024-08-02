@@ -1,15 +1,22 @@
 package com.project.schoolmanagment.service;
 
 import com.project.schoolmanagment.entity.concrets.ContactMessage;
+import com.project.schoolmanagment.exception.ConflictException;
 import com.project.schoolmanagment.payload.request.ContactMessageRequest;
 import com.project.schoolmanagment.payload.response.ContactMessageResponse;
 import com.project.schoolmanagment.payload.response.ResponseMessage;
 import com.project.schoolmanagment.repository.ContactMessageRepository;
+import com.project.schoolmanagment.utils.Messages;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -17,15 +24,31 @@ public class ContactMessageService {
     private final ContactMessageRepository contactMessageRepository;
 
     public ResponseMessage<ContactMessageResponse> save(ContactMessageRequest contactMessageRequest) {
+
         //it is expected to create one message in day with the same email
+        boolean isSameMessageWithSameEmailForToday = contactMessageRepository.existsByEmailEqualsAndDateEquals(contactMessageRequest.getEmail(), LocalDate.now());
+
+        if (isSameMessageWithSameEmailForToday) {
+            throw new ConflictException(Messages.ALREADY_SEND_A_MESSAGE_TODAY);
+        }
         ContactMessage contactMessage = createContactMessage(contactMessageRequest);
         ContactMessage savedData = contactMessageRepository.save(contactMessage);
         return ResponseMessage.<ContactMessageResponse>builder()
+                //this message should be moved to messages class and called from there.
                 .message("Contact Message Created Successfully")
                 .httpStatus(HttpStatus.CREATED)
                 .object(createResponse(savedData))
                 .build();
     }
+
+    public Page<ContactMessageResponse> getAll(int page, int size, String sort, String type){
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort).ascending());
+        if (Objects.equals(type, "desc")) {
+            pageable = PageRequest.of(page, size, Sort.by(sort).descending());
+        }
+        return contactMessageRepository.findAll(pageable).map(this::createResponse);
+    }
+    //TODO:3rd video 1:32:00
 
     private ContactMessageResponse createResponse(ContactMessage contactMessage) {
         return ContactMessageResponse.builder()
