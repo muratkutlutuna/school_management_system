@@ -19,24 +19,24 @@ import java.io.Serializable;
 public class ContactMessageRequest implements Serializable {
 
     @NotNull(message = "Please enter name")
-    @Size(min = 4,max = 16,message = "Your name should be at least 4 characters")
+    @Size(min = 3,max = 50,message = "Your name should be at least 4 characters")
     @Pattern(regexp = "\\A(?!\\s*\\Z).+",message = "Your message must consist of the characters .")
     private String name;
 
     @Email(message = "Please enter valid email")
-    @Size(min = 5,max = 20, message = "Your email should be at least 5 characters")
+    @Size(min = 5,max = 50, message = "Your email should be at least 5 characters")
     @NotNull(message = "Please enter your email")
     //column annotation should be in entity class for DB validation
     @Column(nullable = false,unique = true,length = 20)
     private String email;
 
     @NotNull(message = "Please enter subject")
-    @Size(min = 4,max = 50, message = "Your subject should be at least 4 characters")
+    @Size(min = 3,max = 50, message = "Your subject should be at least 3 characters")
     @Pattern(regexp = "\\A(?!\\s*\\Z).+",message = "Your message must consist of the characters .")
     private String subject;
 
     @NotNull(message = "Please enter message")
-    @Size(min = 16,max = 200, message = "Your message should be at least 16 characters")
+    @Size(min = 16,max = 250, message = "Your message should be at least 16 at most 250 characters")
     @Pattern(regexp = "\\A(?!\\s*\\Z).+",message = "Your message must consist of the characters .")
     private String message;
 

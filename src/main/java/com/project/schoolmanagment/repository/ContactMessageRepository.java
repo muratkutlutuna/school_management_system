@@ -1,6 +1,11 @@
 package com.project.schoolmanagment.repository;
 
 import com.project.schoolmanagment.entity.concrets.ContactMessage;
+import com.project.schoolmanagment.payload.response.ContactMessageResponse;
+import com.project.schoolmanagment.payload.response.ResponseMessage;
+import io.micrometer.observation.ObservationFilter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
@@ -30,4 +35,8 @@ public interface ContactMessageRepository extends JpaRepository<ContactMessage,L
     boolean existsByEmailEqualsAndDateEquals(String email, LocalDate date);
 
     boolean existsByEmailAndDate(String email, LocalDate date);
+
+    ContactMessage findByEmail(String email);
+
+    Page<ContactMessage> findBySubjectEquals(String subject, Pageable myPageable);
 }
