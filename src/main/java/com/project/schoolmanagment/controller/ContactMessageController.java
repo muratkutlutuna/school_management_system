@@ -25,6 +25,14 @@ public class ContactMessageController {
         return contactMessageService.save(contactMessageRequest);
     }
 
+    /**
+     *
+     * @param page number of selected page
+     * @param size size of the page
+     * @param sort sort property
+     * @param type DESC or ASC
+     * @return ContactMessageResponse
+     */
     @GetMapping("/getAll")
     public Page<ContactMessageResponse> getAll(
             @RequestParam(value="page", defaultValue="0") int page,
@@ -45,7 +53,7 @@ public class ContactMessageController {
             @RequestParam(value="page", defaultValue="0") int page,
             @RequestParam(value = "size", defaultValue="10") int size,
             @RequestParam(value = "sort", defaultValue="date") String sort,
-            @RequestParam(value = "type", defaultValue="desc") Sort.Direction type){
+            @RequestParam(value = "type", defaultValue="ASC") Sort.Direction type){
         return contactMessageService.searchBySubject(subject,page, size, sort, type);
     }
 
