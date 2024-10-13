@@ -42,6 +42,7 @@ public class StudentInfo {
     @Enumerated(EnumType.STRING)
     private Note letterGrade;
 
-    //TODO: 1:00:02 5th video
+    @OneToOne
+    private EducationTerm educationTerm;
 
 }

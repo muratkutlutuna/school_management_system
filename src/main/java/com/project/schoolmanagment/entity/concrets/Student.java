@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -32,16 +35,16 @@ public class Student extends User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
-    private List<StudentInfo>studentInfos;
+    private List<StudentInfo> studentInfos;
 
     @ManyToMany
     @JsonIgnore
     @JoinTable(
             name = "student_lessonprogram",
             joinColumns = @JoinColumn(name="student_id"),
-            inverseJoinColumns = @JoinColumn("lesson_program_id")
+            inverseJoinColumns = @JoinColumn(name="lesson_program_id")
     )
-    private Set<LessonProgram>lessonProgramList;
+    private Set<LessonProgram> lessonsProgramList;
 
     @JsonIgnore
     @ManyToMany
