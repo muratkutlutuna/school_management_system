@@ -1,17 +1,14 @@
 package com.project.schoolmanagment.repository;
 
-import com.project.schoolmanagment.entity.concrets.ViceDean;
+import com.project.schoolmanagment.entity.concrets.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ViceDeanRepository extends JpaRepository<ViceDean, Long> {
-
+public interface StudentRepository extends JpaRepository<Student, Long> {
     boolean existsByUsername(String username);
 
     boolean existsBySsn(String ssn);
 
     boolean existsByPhoneNumber(String phone);
 
-    ViceDean findByUsernameEquals(String username);
-
+    Student findByUsernameEquals(String username);
 }
-//TODO: 6th video 1:26:00
