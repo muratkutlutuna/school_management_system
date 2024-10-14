@@ -1,9 +1,13 @@
 package com.project.schoolmanagment.controller;
 
 
+import com.project.schoolmanagment.payload.request.AdminRequest;
+import com.project.schoolmanagment.service.AdminService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AdminController {
 
-    //TODO:6th video
+    private final AdminService adminService;
+
+    @PostMapping("/save")
+    public ResponseEntity<?>save(AdminRequest adminRequest){
+        return null;
+    }
 
 }
